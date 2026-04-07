@@ -5,8 +5,8 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Proxy
   - NAT Traversal
+  - Proxy
 url: >-
   https://raw.githubusercontent.com/api-evangelist/frp/refs/heads/main/apis.yml
 created: '2026-03-27'
@@ -19,8 +19,8 @@ apis:
       frp is a fast reverse proxy that helps expose local servers behind a NAT or firewall to the internet, supporting TCP, UDP, HTTP, and HTTPS protocols.
     humanURL: https://github.com/fatedier/frp
     tags:
-      - Proxy
       - NAT Traversal
+      - Proxy
     properties:
       - type: Documentation
         url: https://gofrp.org/en/docs/
