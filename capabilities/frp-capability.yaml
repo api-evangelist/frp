@@ -1,0 +1,697 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: frp Client Admin API
+  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect
+    or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store
+    is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication
+    using the user and password configured in webServer.user and webServer.password.
+  tags:
+  - Frp
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: frp
+    baseUri: http://127.0.0.1:7400
+    description: frp Client Admin API HTTP API.
+    authentication:
+      type: basic
+      username: '{{FRP_USERNAME}}'
+      password: '{{FRP_PASSWORD}}'
+    resources:
+    - name: healthz
+      path: /healthz
+      operations:
+      - name: gethealthz
+        method: GET
+        description: Health check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-reload
+      path: /api/reload
+      operations:
+      - name: reloadconfig
+        method: GET
+        description: Reload configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-stop
+      path: /api/stop
+      operations:
+      - name: stopclient
+        method: POST
+        description: Stop client
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-status
+      path: /api/status
+      operations:
+      - name: getstatus
+        method: GET
+        description: Get proxy status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-config
+      path: /api/config
+      operations:
+      - name: getconfig
+        method: GET
+        description: Get current configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: putconfig
+        method: PUT
+        description: Replace configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-proxy-name-config
+      path: /api/proxy/{name}/config
+      operations:
+      - name: getproxyconfig
+        method: GET
+        description: Get proxy configuration
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Proxy name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-visitor-name-config
+      path: /api/visitor/{name}/config
+      operations:
+      - name: getvisitorconfig
+        method: GET
+        description: Get visitor configuration
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Visitor name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-store-proxies
+      path: /api/store/proxies
+      operations:
+      - name: liststoreproxies
+        method: GET
+        description: List stored proxies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createstoreproxy
+        method: POST
+        description: Create stored proxy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-store-proxies-name
+      path: /api/store/proxies/{name}
+      operations:
+      - name: getstoreproxy
+        method: GET
+        description: Get stored proxy
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Stored proxy name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatestoreproxy
+        method: PUT
+        description: Update stored proxy
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Stored proxy name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletestoreproxy
+        method: DELETE
+        description: Delete stored proxy
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Stored proxy name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-store-visitors
+      path: /api/store/visitors
+      operations:
+      - name: liststorevisitors
+        method: GET
+        description: List stored visitors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createstorevisitor
+        method: POST
+        description: Create stored visitor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-store-visitors-name
+      path: /api/store/visitors/{name}
+      operations:
+      - name: getstorevisitor
+        method: GET
+        description: Get stored visitor
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Stored visitor name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatestorevisitor
+        method: PUT
+        description: Update stored visitor
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Stored visitor name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletestorevisitor
+        method: DELETE
+        description: Delete stored visitor
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: Stored visitor name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: frp-rest
+    description: REST adapter for frp Client Admin API.
+    resources:
+    - path: /healthz
+      name: gethealthz
+      operations:
+      - method: GET
+        name: gethealthz
+        description: Health check
+        call: frp.gethealthz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/reload
+      name: reloadconfig
+      operations:
+      - method: GET
+        name: reloadconfig
+        description: Reload configuration
+        call: frp.reloadconfig
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/stop
+      name: stopclient
+      operations:
+      - method: POST
+        name: stopclient
+        description: Stop client
+        call: frp.stopclient
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/status
+      name: getstatus
+      operations:
+      - method: GET
+        name: getstatus
+        description: Get proxy status
+        call: frp.getstatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/config
+      name: getconfig
+      operations:
+      - method: GET
+        name: getconfig
+        description: Get current configuration
+        call: frp.getconfig
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/config
+      name: putconfig
+      operations:
+      - method: PUT
+        name: putconfig
+        description: Replace configuration
+        call: frp.putconfig
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/proxy/{name}/config
+      name: getproxyconfig
+      operations:
+      - method: GET
+        name: getproxyconfig
+        description: Get proxy configuration
+        call: frp.getproxyconfig
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/visitor/{name}/config
+      name: getvisitorconfig
+      operations:
+      - method: GET
+        name: getvisitorconfig
+        description: Get visitor configuration
+        call: frp.getvisitorconfig
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/proxies
+      name: liststoreproxies
+      operations:
+      - method: GET
+        name: liststoreproxies
+        description: List stored proxies
+        call: frp.liststoreproxies
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/proxies
+      name: createstoreproxy
+      operations:
+      - method: POST
+        name: createstoreproxy
+        description: Create stored proxy
+        call: frp.createstoreproxy
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/proxies/{name}
+      name: getstoreproxy
+      operations:
+      - method: GET
+        name: getstoreproxy
+        description: Get stored proxy
+        call: frp.getstoreproxy
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/proxies/{name}
+      name: updatestoreproxy
+      operations:
+      - method: PUT
+        name: updatestoreproxy
+        description: Update stored proxy
+        call: frp.updatestoreproxy
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/proxies/{name}
+      name: deletestoreproxy
+      operations:
+      - method: DELETE
+        name: deletestoreproxy
+        description: Delete stored proxy
+        call: frp.deletestoreproxy
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/visitors
+      name: liststorevisitors
+      operations:
+      - method: GET
+        name: liststorevisitors
+        description: List stored visitors
+        call: frp.liststorevisitors
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/visitors
+      name: createstorevisitor
+      operations:
+      - method: POST
+        name: createstorevisitor
+        description: Create stored visitor
+        call: frp.createstorevisitor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/visitors/{name}
+      name: getstorevisitor
+      operations:
+      - method: GET
+        name: getstorevisitor
+        description: Get stored visitor
+        call: frp.getstorevisitor
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/visitors/{name}
+      name: updatestorevisitor
+      operations:
+      - method: PUT
+        name: updatestorevisitor
+        description: Update stored visitor
+        call: frp.updatestorevisitor
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/store/visitors/{name}
+      name: deletestorevisitor
+      operations:
+      - method: DELETE
+        name: deletestorevisitor
+        description: Delete stored visitor
+        call: frp.deletestorevisitor
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: frp-mcp
+    transport: http
+    description: MCP adapter for frp Client Admin API for AI agent use.
+    tools:
+    - name: gethealthz
+      description: Health check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.gethealthz
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reloadconfig
+      description: Reload configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.reloadconfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: stopclient
+      description: Stop client
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: frp.stopclient
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getstatus
+      description: Get proxy status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.getstatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getconfig
+      description: Get current configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.getconfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: putconfig
+      description: Replace configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: frp.putconfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getproxyconfig
+      description: Get proxy configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.getproxyconfig
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Proxy name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getvisitorconfig
+      description: Get visitor configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.getvisitorconfig
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Visitor name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: liststoreproxies
+      description: List stored proxies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.liststoreproxies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createstoreproxy
+      description: Create stored proxy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: frp.createstoreproxy
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getstoreproxy
+      description: Get stored proxy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.getstoreproxy
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Stored proxy name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatestoreproxy
+      description: Update stored proxy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: frp.updatestoreproxy
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Stored proxy name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletestoreproxy
+      description: Delete stored proxy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: frp.deletestoreproxy
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Stored proxy name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: liststorevisitors
+      description: List stored visitors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.liststorevisitors
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createstorevisitor
+      description: Create stored visitor
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: frp.createstorevisitor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getstorevisitor
+      description: Get stored visitor
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: frp.getstorevisitor
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Stored visitor name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatestorevisitor
+      description: Update stored visitor
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: frp.updatestorevisitor
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Stored visitor name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletestorevisitor
+      description: Delete stored visitor
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: frp.deletestorevisitor
+      with:
+        name: tools.name
+      inputParameters:
+      - name: name
+        type: string
+        description: Stored visitor name
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    FRP_USERNAME: FRP_USERNAME
+    FRP_PASSWORD: FRP_PASSWORD
