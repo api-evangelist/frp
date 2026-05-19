@@ -1,0 +1,256 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: frp Server Admin API — Proxies
+  description: 'frp Server Admin API — Proxies. 5 operations. Lead operation: Delete offline proxies. Self-contained Naftiko
+    capability covering one Frp business surface.'
+  tags:
+  - Frp
+  - Proxies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRP_API_KEY: FRP_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: server-admin-proxies
+    baseUri: http://{host}:{port}
+    description: frp Server Admin API — Proxies business capability. Self-contained, no shared references.
+    resources:
+    - name: api-proxies
+      path: /api/proxies
+      operations:
+      - name: deleteofflineproxies
+        method: DELETE
+        description: Delete offline proxies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Proxy status to clear (only offline is supported)
+          required: true
+    - name: api-proxies-name
+      path: /api/proxies/{name}
+      operations:
+      - name: getproxybyname
+        method: GET
+        description: Get proxy by name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: Proxy name
+          required: true
+    - name: api-proxy-type
+      path: /api/proxy/{type}
+      operations:
+      - name: listproxiesbytype
+        method: GET
+        description: List proxies by type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          description: Proxy type
+          required: true
+    - name: api-proxy-type-name
+      path: /api/proxy/{type}/{name}
+      operations:
+      - name: getproxybytypeandname
+        method: GET
+        description: Get proxy by type and name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: path
+          type: string
+          description: Proxy type
+          required: true
+        - name: name
+          in: path
+          type: string
+          description: Proxy name
+          required: true
+    - name: api-traffic-name
+      path: /api/traffic/{name}
+      operations:
+      - name: getproxytraffic
+        method: GET
+        description: Get proxy traffic
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: path
+          type: string
+          description: Proxy name
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.FRP_USER}}'
+      password: '{{env.FRP_PASS}}'
+  exposes:
+  - type: rest
+    namespace: server-admin-proxies-rest
+    port: 8080
+    description: REST adapter for frp Server Admin API — Proxies. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/proxies
+      name: api-proxies
+      description: REST surface for api-proxies.
+      operations:
+      - method: DELETE
+        name: deleteofflineproxies
+        description: Delete offline proxies
+        call: server-admin-proxies.deleteofflineproxies
+        with:
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/proxies/{name}
+      name: api-proxies-name
+      description: REST surface for api-proxies-name.
+      operations:
+      - method: GET
+        name: getproxybyname
+        description: Get proxy by name
+        call: server-admin-proxies.getproxybyname
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/proxy/{type}
+      name: api-proxy-type
+      description: REST surface for api-proxy-type.
+      operations:
+      - method: GET
+        name: listproxiesbytype
+        description: List proxies by type
+        call: server-admin-proxies.listproxiesbytype
+        with:
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/proxy/{type}/{name}
+      name: api-proxy-type-name
+      description: REST surface for api-proxy-type-name.
+      operations:
+      - method: GET
+        name: getproxybytypeandname
+        description: Get proxy by type and name
+        call: server-admin-proxies.getproxybytypeandname
+        with:
+          type: rest.type
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/traffic/{name}
+      name: api-traffic-name
+      description: REST surface for api-traffic-name.
+      operations:
+      - method: GET
+        name: getproxytraffic
+        description: Get proxy traffic
+        call: server-admin-proxies.getproxytraffic
+        with:
+          name: rest.name
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: server-admin-proxies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for frp Server Admin API — Proxies. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: delete-offline-proxies
+      description: Delete offline proxies
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: server-admin-proxies.deleteofflineproxies
+      with:
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-proxy-name
+      description: Get proxy by name
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: server-admin-proxies.getproxybyname
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-proxies-type
+      description: List proxies by type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: server-admin-proxies.listproxiesbytype
+      with:
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-proxy-type-and-name
+      description: Get proxy by type and name
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: server-admin-proxies.getproxybytypeandname
+      with:
+        type: tools.type
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-proxy-traffic
+      description: Get proxy traffic
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: server-admin-proxies.getproxytraffic
+      with:
+        name: tools.name
+      outputParameters:
+      - type: object
+        mapping: $.

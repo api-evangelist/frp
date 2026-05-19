@@ -1,0 +1,71 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: frp Server Admin API — Metrics
+  description: 'frp Server Admin API — Metrics. 1 operations. Lead operation: Prometheus metrics. Self-contained Naftiko capability
+    covering one Frp business surface.'
+  tags:
+  - Frp
+  - Metrics
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRP_API_KEY: FRP_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: server-admin-metrics
+    baseUri: http://{host}:{port}
+    description: frp Server Admin API — Metrics business capability. Self-contained, no shared references.
+    resources:
+    - name: metrics
+      path: /metrics
+      operations:
+      - name: getmetrics
+        method: GET
+        description: Prometheus metrics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRP_USER}}'
+      password: '{{env.FRP_PASS}}'
+  exposes:
+  - type: rest
+    namespace: server-admin-metrics-rest
+    port: 8080
+    description: REST adapter for frp Server Admin API — Metrics. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/metrics
+      name: metrics
+      description: REST surface for metrics.
+      operations:
+      - method: GET
+        name: getmetrics
+        description: Prometheus metrics
+        call: server-admin-metrics.getmetrics
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: server-admin-metrics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for frp Server Admin API — Metrics. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: prometheus-metrics
+      description: Prometheus metrics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: server-admin-metrics.getmetrics
+      outputParameters:
+      - type: object
+        mapping: $.

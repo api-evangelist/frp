@@ -1,0 +1,71 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: frp Client Admin API — Health
+  description: 'frp Client Admin API — Health. 1 operations. Lead operation: Health check. Self-contained Naftiko capability
+    covering one Frp business surface.'
+  tags:
+  - Frp
+  - Health
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRP_API_KEY: FRP_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: client-admin-health
+    baseUri: http://{host}:{port}
+    description: frp Client Admin API — Health business capability. Self-contained, no shared references.
+    resources:
+    - name: healthz
+      path: /healthz
+      operations:
+      - name: gethealthz
+        method: GET
+        description: Health check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRP_USER}}'
+      password: '{{env.FRP_PASS}}'
+  exposes:
+  - type: rest
+    namespace: client-admin-health-rest
+    port: 8080
+    description: REST adapter for frp Client Admin API — Health. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/healthz
+      name: healthz
+      description: REST surface for healthz.
+      operations:
+      - method: GET
+        name: gethealthz
+        description: Health check
+        call: client-admin-health.gethealthz
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: client-admin-health-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for frp Client Admin API — Health. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: health-check
+      description: Health check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: client-admin-health.gethealthz
+      outputParameters:
+      - type: object
+        mapping: $.
