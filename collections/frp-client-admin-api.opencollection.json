@@ -1,0 +1,335 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "frp Client Admin API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/healthz"
+          },
+          "docs": "Returns HTTP 200 when the client is running. This route requires no authentication."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Lifecycle",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reload configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/reload"
+          },
+          "docs": "Reloads proxy and visitor configuration from the configuration source without restarting frpc."
+        },
+        {
+          "info": {
+            "name": "Stop client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{host}:{port}/api/stop"
+          },
+          "docs": "Initiates a graceful shutdown of the running frpc process."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get proxy status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/status"
+          },
+          "docs": "Returns the working status for every proxy currently managed by this frpc instance, grouped by proxy type."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/config"
+          },
+          "docs": "Returns the raw text of the active frpc configuration."
+        },
+        {
+          "info": {
+            "name": "Replace configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{host}:{port}/api/config"
+          },
+          "docs": "Replaces the active frpc configuration with the request body."
+        },
+        {
+          "info": {
+            "name": "Get proxy configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/proxy/:name/config",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Proxy name"
+              }
+            ]
+          },
+          "docs": "Returns the runtime configuration for a single proxy identified by name."
+        },
+        {
+          "info": {
+            "name": "Get visitor configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/visitor/:name/config",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Visitor name"
+              }
+            ]
+          },
+          "docs": "Returns the runtime configuration for a single visitor identified by name."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Store",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List stored proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/proxies"
+          },
+          "docs": "Lists proxy definitions persisted in the configuration store. Available only when a store source is configured."
+        },
+        {
+          "info": {
+            "name": "Create stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{host}:{port}/api/store/proxies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Persists a new proxy definition in the configuration store."
+        },
+        {
+          "info": {
+            "name": "Get stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/proxies/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored proxy name"
+              }
+            ]
+          },
+          "docs": "Get stored proxy"
+        },
+        {
+          "info": {
+            "name": "Update stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{host}:{port}/api/store/proxies/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored proxy name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update stored proxy"
+        },
+        {
+          "info": {
+            "name": "Delete stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{host}:{port}/api/store/proxies/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored proxy name"
+              }
+            ]
+          },
+          "docs": "Delete stored proxy"
+        },
+        {
+          "info": {
+            "name": "List stored visitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/visitors"
+          },
+          "docs": "Lists visitor definitions persisted in the configuration store. Available only when a store source is configured."
+        },
+        {
+          "info": {
+            "name": "Create stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{host}:{port}/api/store/visitors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create stored visitor"
+        },
+        {
+          "info": {
+            "name": "Get stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/visitors/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored visitor name"
+              }
+            ]
+          },
+          "docs": "Get stored visitor"
+        },
+        {
+          "info": {
+            "name": "Update stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{host}:{port}/api/store/visitors/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored visitor name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update stored visitor"
+        },
+        {
+          "info": {
+            "name": "Delete stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{host}:{port}/api/store/visitors/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored visitor name"
+              }
+            ]
+          },
+          "docs": "Delete stored visitor"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

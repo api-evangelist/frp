@@ -1,0 +1,247 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "frp Server Admin API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/healthz"
+          },
+          "docs": "Returns HTTP 200 with no body when the server is running. This route is registered without authentication."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Prometheus metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/metrics"
+          },
+          "docs": "Exposes Prometheus-format metrics for the frps process. Only available when enablePrometheus is set to true in the server configuration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Server",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get server info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/serverinfo"
+          },
+          "docs": "Returns version, listening ports, configured limits, and aggregate traffic and connection statistics for the frps process."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/clients",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by client user name"
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by client identifier"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by frpc run identifier"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by online status"
+              }
+            ]
+          },
+          "docs": "Returns the registry of clients (frpc instances) that have authenticated against the server, with optional filters for user, client identifier, run identifier, and online status."
+        },
+        {
+          "info": {
+            "name": "Get client detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/clients/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Registry key for the client"
+              }
+            ]
+          },
+          "docs": "Returns detail for a single client identified by its registry key."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Proxies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List proxies by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/proxy/:type",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Proxy type"
+              }
+            ]
+          },
+          "docs": "Returns all known proxies for a given proxy type."
+        },
+        {
+          "info": {
+            "name": "Get proxy by type and name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/proxy/:type/:name",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Proxy type"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Proxy name"
+              }
+            ]
+          },
+          "docs": "Returns detailed statistics for a single proxy identified by type and name."
+        },
+        {
+          "info": {
+            "name": "Get proxy by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/proxies/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Proxy name"
+              }
+            ]
+          },
+          "docs": "Returns detailed statistics for a single proxy identified by name."
+        },
+        {
+          "info": {
+            "name": "Delete offline proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{host}:{port}/api/proxies",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Proxy status to clear (only offline is supported)"
+              }
+            ]
+          },
+          "docs": "Clears proxies that are no longer connected. The status query parameter must be set to offline; any other value is rejected."
+        },
+        {
+          "info": {
+            "name": "Get proxy traffic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/traffic/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Proxy name"
+              }
+            ]
+          },
+          "docs": "Returns daily inbound and outbound traffic counters for a proxy."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
