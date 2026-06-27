@@ -67,7 +67,7 @@ common:
     url: https://github.com/fatedier/frp
   - type: Issues
     url: https://github.com/fatedier/frp/issues
-  - type: Releases
+  - type: ReleaseNotes
     url: https://github.com/fatedier/frp/releases
   - type: License
     url: https://github.com/fatedier/frp/blob/master/LICENSE
