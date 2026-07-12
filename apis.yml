@@ -57,6 +57,10 @@ apis:
       - type: OpenAPI
         url: openapi/frp-client-admin-api-openapi.yml
 common:
+  - type: DomainSecurity
+    url: security/frp-domain-security.yml
+  - type: Authentication
+    url: authentication/frp-authentication.yml
   - type: Website
     url: https://gofrp.org/
   - type: Documentation

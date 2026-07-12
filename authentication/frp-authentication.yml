@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/frp-client-admin-api-openapi.yml, openapi/frp-server-admin-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic auth using webServer.user and webServer.password
+  sources:
+  - openapi/frp-client-admin-api-openapi.yml
+  - openapi/frp-server-admin-api-openapi.yml
