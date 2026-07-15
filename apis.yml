@@ -57,6 +57,8 @@ apis:
       - type: OpenAPI
         url: openapi/frp-client-admin-api-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/frp-agentic-access.yml
   - type: DomainSecurity
     url: security/frp-domain-security.yml
   - type: Authentication
