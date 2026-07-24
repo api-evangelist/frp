@@ -1,0 +1,91 @@
+openapi: 3.1.0
+info:
+  title: frp Client Admin Clients Server API
+  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
+  version: 0.0.1
+  contact:
+    name: frp
+    url: https://gofrp.org/
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://{host}:{port}
+  description: frp client admin server (frpc webServer)
+  variables:
+    host:
+      default: 127.0.0.1
+      description: Address where frpc webServer is listening (webServer.addr)
+    port:
+      default: '7400'
+      description: Port where frpc webServer is listening (webServer.port)
+security:
+- BasicAuth: []
+tags:
+- name: Server
+  description: Server runtime information
+paths:
+  /api/serverinfo:
+    get:
+      tags:
+      - Server
+      summary: Get server info
+      description: Returns version, listening ports, configured limits, and aggregate traffic and connection statistics for the frps process.
+      operationId: getServerInfo
+      responses:
+        '200':
+          description: Server information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerInfo'
+components:
+  schemas:
+    ServerInfo:
+      type: object
+      properties:
+        version:
+          type: string
+        bindPort:
+          type: integer
+        vhostHTTPPort:
+          type: integer
+        vhostHTTPSPort:
+          type: integer
+        tcpmuxHTTPConnectPort:
+          type: integer
+        kcpBindPort:
+          type: integer
+        quicBindPort:
+          type: integer
+        subdomainHost:
+          type: string
+        maxPoolCount:
+          type: integer
+        maxPortsPerClient:
+          type: integer
+        heartbeatTimeout:
+          type: integer
+        allowPortsStr:
+          type: string
+        tlsForce:
+          type: boolean
+        totalTrafficIn:
+          type: integer
+          format: int64
+        totalTrafficOut:
+          type: integer
+          format: int64
+        curConns:
+          type: integer
+        clientCounts:
+          type: integer
+        proxyTypeCount:
+          type: object
+          additionalProperties:
+            type: integer
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth using webServer.user and webServer.password

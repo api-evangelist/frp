@@ -1,0 +1,245 @@
+openapi: 3.1.0
+info:
+  title: frp Client Admin Clients Proxies API
+  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
+  version: 0.0.1
+  contact:
+    name: frp
+    url: https://gofrp.org/
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://{host}:{port}
+  description: frp client admin server (frpc webServer)
+  variables:
+    host:
+      default: 127.0.0.1
+      description: Address where frpc webServer is listening (webServer.addr)
+    port:
+      default: '7400'
+      description: Port where frpc webServer is listening (webServer.port)
+security:
+- BasicAuth: []
+tags:
+- name: Proxies
+  description: Active proxy inventory and traffic stats
+paths:
+  /api/proxy/{type}:
+    get:
+      tags:
+      - Proxies
+      summary: List proxies by type
+      description: Returns all known proxies for a given proxy type.
+      operationId: listProxiesByType
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: Proxy type
+        schema:
+          type: string
+          enum:
+          - tcp
+          - udp
+          - http
+          - https
+          - tcpmux
+          - stcp
+          - xtcp
+      responses:
+        '200':
+          description: Proxies of the requested type
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  proxies:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProxyStatsInfo'
+  /api/proxy/{type}/{name}:
+    get:
+      tags:
+      - Proxies
+      summary: Get proxy by type and name
+      description: Returns detailed statistics for a single proxy identified by type and name.
+      operationId: getProxyByTypeAndName
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: Proxy type
+        schema:
+          type: string
+      - name: name
+        in: path
+        required: true
+        description: Proxy name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Proxy statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProxyStats'
+        '404':
+          description: No proxy info found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/proxies/{name}:
+    get:
+      tags:
+      - Proxies
+      summary: Get proxy by name
+      description: Returns detailed statistics for a single proxy identified by name.
+      operationId: getProxyByName
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Proxy name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Proxy statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProxyStats'
+        '404':
+          description: No proxy info found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/proxies:
+    delete:
+      tags:
+      - Proxies
+      summary: Delete offline proxies
+      description: Clears proxies that are no longer connected. The status query parameter must be set to offline; any other value is rejected.
+      operationId: deleteOfflineProxies
+      parameters:
+      - name: status
+        in: query
+        required: true
+        description: Proxy status to clear (only offline is supported)
+        schema:
+          type: string
+          enum:
+          - offline
+      responses:
+        '200':
+          description: Offline proxies cleared
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralResponse'
+        '400':
+          description: Unsupported status value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/traffic/{name}:
+    get:
+      tags:
+      - Proxies
+      summary: Get proxy traffic
+      description: Returns daily inbound and outbound traffic counters for a proxy.
+      operationId: getProxyTraffic
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Proxy name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Traffic counters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProxyTraffic'
+        '404':
+          description: No proxy info found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    ProxyStats:
+      allOf:
+      - $ref: '#/components/schemas/ProxyStatsInfo'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+    ProxyStatsInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        user:
+          type: string
+        clientId:
+          type: string
+        conf:
+          type: object
+          additionalProperties: true
+        status:
+          type: string
+          enum:
+          - online
+          - offline
+        todayTrafficIn:
+          type: integer
+          format: int64
+        todayTrafficOut:
+          type: integer
+          format: int64
+        curConns:
+          type: integer
+        lastStartTime:
+          type: string
+        lastCloseTime:
+          type: string
+    GeneralResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+    ProxyTraffic:
+      type: object
+      properties:
+        name:
+          type: string
+        trafficIn:
+          type: array
+          items:
+            type: integer
+            format: int64
+        trafficOut:
+          type: array
+          items:
+            type: integer
+            format: int64
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth using webServer.user and webServer.password

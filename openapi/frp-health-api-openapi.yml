@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: frp Client Admin Clients Health API
+  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
+  version: 0.0.1
+  contact:
+    name: frp
+    url: https://gofrp.org/
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://{host}:{port}
+  description: frp client admin server (frpc webServer)
+  variables:
+    host:
+      default: 127.0.0.1
+      description: Address where frpc webServer is listening (webServer.addr)
+    port:
+      default: '7400'
+      description: Port where frpc webServer is listening (webServer.port)
+security:
+- BasicAuth: []
+tags:
+- name: Health
+  description: Liveness probe
+paths:
+  /healthz:
+    get:
+      tags:
+      - Health
+      summary: Health check
+      description: Returns HTTP 200 when the client is running. This route requires no authentication.
+      operationId: getHealthz
+      security: []
+      responses:
+        '200':
+          description: Client is healthy
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth using webServer.user and webServer.password

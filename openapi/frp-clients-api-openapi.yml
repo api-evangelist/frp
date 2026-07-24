@@ -1,0 +1,137 @@
+openapi: 3.1.0
+info:
+  title: frp Client Admin Clients API
+  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
+  version: 0.0.1
+  contact:
+    name: frp
+    url: https://gofrp.org/
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://{host}:{port}
+  description: frp client admin server (frpc webServer)
+  variables:
+    host:
+      default: 127.0.0.1
+      description: Address where frpc webServer is listening (webServer.addr)
+    port:
+      default: '7400'
+      description: Port where frpc webServer is listening (webServer.port)
+security:
+- BasicAuth: []
+tags:
+- name: Clients
+  description: Connected client inventory
+paths:
+  /api/clients:
+    get:
+      tags:
+      - Clients
+      summary: List clients
+      description: Returns the registry of clients (frpc instances) that have authenticated against the server, with optional filters for user, client identifier, run identifier, and online status.
+      operationId: listClients
+      parameters:
+      - name: user
+        in: query
+        description: Filter by client user name
+        schema:
+          type: string
+      - name: clientId
+        in: query
+        description: Filter by client identifier
+        schema:
+          type: string
+      - name: runId
+        in: query
+        description: Filter by frpc run identifier
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by online status
+        schema:
+          type: string
+          enum:
+          - all
+          - online
+          - offline
+      responses:
+        '200':
+          description: Clients matching the filter
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClientInfo'
+  /api/clients/{key}:
+    get:
+      tags:
+      - Clients
+      summary: Get client detail
+      description: Returns detail for a single client identified by its registry key.
+      operationId: getClient
+      parameters:
+      - name: key
+        in: path
+        required: true
+        description: Registry key for the client
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Client detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientInfo'
+        '404':
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    ClientInfo:
+      type: object
+      properties:
+        key:
+          type: string
+        user:
+          type: string
+        clientId:
+          type: string
+        runId:
+          type: string
+        version:
+          type: string
+        hostname:
+          type: string
+        clientIp:
+          type: string
+        firstConnectedAt:
+          type: integer
+          format: int64
+        lastConnectedAt:
+          type: integer
+          format: int64
+        disconnectedAt:
+          type: integer
+          format: int64
+        online:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth using webServer.user and webServer.password

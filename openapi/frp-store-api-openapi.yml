@@ -1,0 +1,307 @@
+openapi: 3.1.0
+info:
+  title: frp Client Admin Clients Store API
+  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
+  version: 0.0.1
+  contact:
+    name: frp
+    url: https://gofrp.org/
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://{host}:{port}
+  description: frp client admin server (frpc webServer)
+  variables:
+    host:
+      default: 127.0.0.1
+      description: Address where frpc webServer is listening (webServer.addr)
+    port:
+      default: '7400'
+      description: Port where frpc webServer is listening (webServer.port)
+security:
+- BasicAuth: []
+tags:
+- name: Store
+  description: Persistent configuration store for proxies and visitors
+paths:
+  /api/store/proxies:
+    get:
+      tags:
+      - Store
+      summary: List stored proxies
+      description: Lists proxy definitions persisted in the configuration store. Available only when a store source is configured.
+      operationId: listStoreProxies
+      responses:
+        '200':
+          description: Stored proxy definitions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StoredProxy'
+    post:
+      tags:
+      - Store
+      summary: Create stored proxy
+      description: Persists a new proxy definition in the configuration store.
+      operationId: createStoreProxy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoredProxy'
+      responses:
+        '200':
+          description: Proxy created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoredProxy'
+  /api/store/proxies/{name}:
+    get:
+      tags:
+      - Store
+      summary: Get stored proxy
+      operationId: getStoreProxy
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Stored proxy name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Stored proxy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoredProxy'
+        '404':
+          description: Stored proxy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Store
+      summary: Update stored proxy
+      operationId: updateStoreProxy
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Stored proxy name
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoredProxy'
+      responses:
+        '200':
+          description: Stored proxy updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoredProxy'
+        '404':
+          description: Stored proxy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Store
+      summary: Delete stored proxy
+      operationId: deleteStoreProxy
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Stored proxy name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Stored proxy deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralResponse'
+        '404':
+          description: Stored proxy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/store/visitors:
+    get:
+      tags:
+      - Store
+      summary: List stored visitors
+      description: Lists visitor definitions persisted in the configuration store. Available only when a store source is configured.
+      operationId: listStoreVisitors
+      responses:
+        '200':
+          description: Stored visitor definitions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StoredVisitor'
+    post:
+      tags:
+      - Store
+      summary: Create stored visitor
+      operationId: createStoreVisitor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoredVisitor'
+      responses:
+        '200':
+          description: Visitor created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoredVisitor'
+  /api/store/visitors/{name}:
+    get:
+      tags:
+      - Store
+      summary: Get stored visitor
+      operationId: getStoreVisitor
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Stored visitor name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Stored visitor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoredVisitor'
+        '404':
+          description: Stored visitor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Store
+      summary: Update stored visitor
+      operationId: updateStoreVisitor
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Stored visitor name
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoredVisitor'
+      responses:
+        '200':
+          description: Stored visitor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoredVisitor'
+        '404':
+          description: Stored visitor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Store
+      summary: Delete stored visitor
+      operationId: deleteStoreVisitor
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Stored visitor name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Stored visitor deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralResponse'
+        '404':
+          description: Stored visitor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    GeneralResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+    StoredVisitor:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        config:
+          type: object
+          additionalProperties: true
+      required:
+      - name
+      - type
+    StoredProxy:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        config:
+          type: object
+          additionalProperties: true
+      required:
+      - name
+      - type
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth using webServer.user and webServer.password

@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: frp Client Admin Clients Lifecycle API
+  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
+  version: 0.0.1
+  contact:
+    name: frp
+    url: https://gofrp.org/
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://{host}:{port}
+  description: frp client admin server (frpc webServer)
+  variables:
+    host:
+      default: 127.0.0.1
+      description: Address where frpc webServer is listening (webServer.addr)
+    port:
+      default: '7400'
+      description: Port where frpc webServer is listening (webServer.port)
+security:
+- BasicAuth: []
+tags:
+- name: Lifecycle
+  description: Reload and stop the running frpc process
+paths:
+  /api/reload:
+    get:
+      tags:
+      - Lifecycle
+      summary: Reload configuration
+      description: Reloads proxy and visitor configuration from the configuration source without restarting frpc.
+      operationId: reloadConfig
+      responses:
+        '200':
+          description: Reload succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralResponse'
+  /api/stop:
+    post:
+      tags:
+      - Lifecycle
+      summary: Stop client
+      description: Initiates a graceful shutdown of the running frpc process.
+      operationId: stopClient
+      responses:
+        '200':
+          description: Stop accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralResponse'
+components:
+  schemas:
+    GeneralResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth using webServer.user and webServer.password
