@@ -5,7 +5,20 @@ description: >-
   internet. Both the server (frps) and the client (frpc) include built-in HTTP admin APIs that operators can use to
   inspect runtime status, manage proxies and visitors, hot-reload configuration, and scrape Prometheus metrics.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/frp.png
 access: Open Source
 created: '2026-03-27'
 modified: '2026-05-19'
@@ -17,45 +30,132 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/frp/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: frp:server-admin-api
-    name: frp Server Admin API
-    description: >-
-      The frp server admin API is the HTTP control plane exposed by frps on its dashboard web server. It returns version
-      and traffic information for the server, lists connected clients, lists and inspects active proxies of any type,
-      returns daily traffic counters per proxy, and lets operators clear proxies that are offline. The API is secured
-      with HTTP Basic auth using the dashboard user and password configured in the frps webServer block.
-    humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
-    baseURL: http://localhost:7500
-    tags:
-      - NAT Traversal
-      - Reverse Proxy
-      - Server Admin
-      - Dashboard
-    properties:
-      - type: Documentation
-        url: https://gofrp.org/en/docs/features/common/server-dashboard/
-      - type: OpenAPI
-        url: openapi/frp-server-admin-api-openapi.yml
-  - aid: frp:client-admin-api
-    name: frp Client Admin API
-    description: >-
-      The frp client admin API is the HTTP control plane exposed by frpc on its local web server. It supports
-      hot-reloading the proxy and visitor configuration, stopping the running client, returning the active config,
-      replacing the active config, querying per-proxy and per-visitor status, and (when a configuration store is
-      enabled) listing, creating, updating, and deleting persisted proxy and visitor definitions. The API is secured
-      with HTTP Basic auth using the user and password configured in the frpc webServer block.
-    humanURL: https://gofrp.org/en/docs/reference/client-configures/
-    baseURL: http://127.0.0.1:7400
-    tags:
-      - NAT Traversal
-      - Reverse Proxy
-      - Client Admin
-      - Configuration
-    properties:
-      - type: Documentation
-        url: https://gofrp.org/en/docs/reference/client-configures/
-      - type: OpenAPI
-        url: openapi/frp-client-admin-api-openapi.yml
+- aid: frp:frp-clients-api
+  name: frp Clients API
+  description: Connected client inventory
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Clients
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-clients-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-configuration-api
+  name: frp Configuration API
+  description: Read and replace the in-memory frpc configuration
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-configuration-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-health-api
+  name: frp Health API
+  description: Liveness probe
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-health-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-lifecycle-api
+  name: frp Lifecycle API
+  description: Reload and stop the running frpc process
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Lifecycle
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-lifecycle-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-metrics-api
+  name: frp Metrics API
+  description: Prometheus metrics endpoint
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-metrics-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-proxies-api
+  name: frp Proxies API
+  description: Active proxy inventory and traffic stats
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Proxies
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-proxies-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-server-api
+  name: frp Server API
+  description: Server runtime information
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Server
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-server-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-status-api
+  name: frp Status API
+  description: Runtime status of proxies and visitors
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Status
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-status-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
+- aid: frp:frp-store-api
+  name: frp Store API
+  description: Persistent configuration store for proxies and visitors
+  humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
+  baseURL: http://localhost:7500
+  tags:
+  - Store
+  properties:
+  - type: OpenAPI
+    url: openapi/frp-store-api-openapi.yml
+  - type: Documentation
+    url: https://gofrp.org/en/docs/features/common/server-dashboard/
+  - type: Documentation
+    url: https://gofrp.org/en/docs/reference/client-configures/
 common:
   - type: AgenticAccess
     url: agentic-access/frp-agentic-access.yml
