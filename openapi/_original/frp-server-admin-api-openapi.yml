@@ -1,0 +1,448 @@
+openapi: 3.1.0
+info:
+  title: frp Server Admin API
+  description: >-
+    The frp server (frps) exposes a built-in HTTP admin API on its dashboard
+    web server. The API returns runtime information about the frps process,
+    connected clients, and active proxies, and lets operators inspect proxy
+    traffic statistics or clear offline proxies. All routes (except /healthz)
+    require HTTP Basic authentication using the dashboard user and password
+    configured in webServer.user and webServer.password.
+  version: "0.0.1"
+  contact:
+    name: frp
+    url: https://gofrp.org/
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: http://{host}:{port}
+    description: frp server dashboard (frps webServer)
+    variables:
+      host:
+        default: localhost
+        description: Address where frps webServer is listening (webServer.addr)
+      port:
+        default: "7500"
+        description: Port where frps webServer is listening (webServer.port)
+tags:
+  - name: Health
+    description: Liveness probe
+  - name: Server
+    description: Server runtime information
+  - name: Clients
+    description: Connected client inventory
+  - name: Proxies
+    description: Active proxy inventory and traffic stats
+  - name: Metrics
+    description: Prometheus metrics endpoint
+paths:
+  /healthz:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: >-
+        Returns HTTP 200 with no body when the server is running. This route
+        is registered without authentication.
+      operationId: getHealthz
+      security: []
+      responses:
+        "200":
+          description: Server is healthy
+  /metrics:
+    get:
+      tags:
+        - Metrics
+      summary: Prometheus metrics
+      description: >-
+        Exposes Prometheus-format metrics for the frps process. Only available
+        when enablePrometheus is set to true in the server configuration.
+      operationId: getMetrics
+      responses:
+        "200":
+          description: Prometheus metrics in text exposition format
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/serverinfo:
+    get:
+      tags:
+        - Server
+      summary: Get server info
+      description: >-
+        Returns version, listening ports, configured limits, and aggregate
+        traffic and connection statistics for the frps process.
+      operationId: getServerInfo
+      responses:
+        "200":
+          description: Server information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerInfo"
+  /api/clients:
+    get:
+      tags:
+        - Clients
+      summary: List clients
+      description: >-
+        Returns the registry of clients (frpc instances) that have authenticated
+        against the server, with optional filters for user, client identifier,
+        run identifier, and online status.
+      operationId: listClients
+      parameters:
+        - name: user
+          in: query
+          description: Filter by client user name
+          schema:
+            type: string
+        - name: clientId
+          in: query
+          description: Filter by client identifier
+          schema:
+            type: string
+        - name: runId
+          in: query
+          description: Filter by frpc run identifier
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter by online status
+          schema:
+            type: string
+            enum:
+              - all
+              - online
+              - offline
+      responses:
+        "200":
+          description: Clients matching the filter
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClientInfo"
+  /api/clients/{key}:
+    get:
+      tags:
+        - Clients
+      summary: Get client detail
+      description: Returns detail for a single client identified by its registry key.
+      operationId: getClient
+      parameters:
+        - name: key
+          in: path
+          required: true
+          description: Registry key for the client
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Client detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientInfo"
+        "404":
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/proxy/{type}:
+    get:
+      tags:
+        - Proxies
+      summary: List proxies by type
+      description: Returns all known proxies for a given proxy type.
+      operationId: listProxiesByType
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: Proxy type
+          schema:
+            type: string
+            enum:
+              - tcp
+              - udp
+              - http
+              - https
+              - tcpmux
+              - stcp
+              - xtcp
+      responses:
+        "200":
+          description: Proxies of the requested type
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  proxies:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ProxyStatsInfo"
+  /api/proxy/{type}/{name}:
+    get:
+      tags:
+        - Proxies
+      summary: Get proxy by type and name
+      description: Returns detailed statistics for a single proxy identified by type and name.
+      operationId: getProxyByTypeAndName
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: Proxy type
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          description: Proxy name
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Proxy statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProxyStats"
+        "404":
+          description: No proxy info found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/proxies/{name}:
+    get:
+      tags:
+        - Proxies
+      summary: Get proxy by name
+      description: Returns detailed statistics for a single proxy identified by name.
+      operationId: getProxyByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: Proxy name
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Proxy statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProxyStats"
+        "404":
+          description: No proxy info found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/proxies:
+    delete:
+      tags:
+        - Proxies
+      summary: Delete offline proxies
+      description: >-
+        Clears proxies that are no longer connected. The status query parameter
+        must be set to offline; any other value is rejected.
+      operationId: deleteOfflineProxies
+      parameters:
+        - name: status
+          in: query
+          required: true
+          description: Proxy status to clear (only offline is supported)
+          schema:
+            type: string
+            enum:
+              - offline
+      responses:
+        "200":
+          description: Offline proxies cleared
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+        "400":
+          description: Unsupported status value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/traffic/{name}:
+    get:
+      tags:
+        - Proxies
+      summary: Get proxy traffic
+      description: Returns daily inbound and outbound traffic counters for a proxy.
+      operationId: getProxyTraffic
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: Proxy name
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Traffic counters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProxyTraffic"
+        "404":
+          description: No proxy info found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic auth using webServer.user and webServer.password
+  schemas:
+    ServerInfo:
+      type: object
+      properties:
+        version:
+          type: string
+        bindPort:
+          type: integer
+        vhostHTTPPort:
+          type: integer
+        vhostHTTPSPort:
+          type: integer
+        tcpmuxHTTPConnectPort:
+          type: integer
+        kcpBindPort:
+          type: integer
+        quicBindPort:
+          type: integer
+        subdomainHost:
+          type: string
+        maxPoolCount:
+          type: integer
+        maxPortsPerClient:
+          type: integer
+        heartbeatTimeout:
+          type: integer
+        allowPortsStr:
+          type: string
+        tlsForce:
+          type: boolean
+        totalTrafficIn:
+          type: integer
+          format: int64
+        totalTrafficOut:
+          type: integer
+          format: int64
+        curConns:
+          type: integer
+        clientCounts:
+          type: integer
+        proxyTypeCount:
+          type: object
+          additionalProperties:
+            type: integer
+    ClientInfo:
+      type: object
+      properties:
+        key:
+          type: string
+        user:
+          type: string
+        clientId:
+          type: string
+        runId:
+          type: string
+        version:
+          type: string
+        hostname:
+          type: string
+        clientIp:
+          type: string
+        firstConnectedAt:
+          type: integer
+          format: int64
+        lastConnectedAt:
+          type: integer
+          format: int64
+        disconnectedAt:
+          type: integer
+          format: int64
+        online:
+          type: boolean
+    ProxyStatsInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        user:
+          type: string
+        clientId:
+          type: string
+        conf:
+          type: object
+          additionalProperties: true
+        status:
+          type: string
+          enum:
+            - online
+            - offline
+        todayTrafficIn:
+          type: integer
+          format: int64
+        todayTrafficOut:
+          type: integer
+          format: int64
+        curConns:
+          type: integer
+        lastStartTime:
+          type: string
+        lastCloseTime:
+          type: string
+    ProxyStats:
+      allOf:
+        - $ref: "#/components/schemas/ProxyStatsInfo"
+    ProxyTraffic:
+      type: object
+      properties:
+        name:
+          type: string
+        trafficIn:
+          type: array
+          items:
+            type: integer
+            format: int64
+        trafficOut:
+          type: array
+          items:
+            type: integer
+            format: int64
+    GeneralResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+security:
+  - BasicAuth: []

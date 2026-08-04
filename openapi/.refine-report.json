@@ -1,0 +1,30 @@
+{
+  "provider": "frp",
+  "sources": [
+    "frp-clients-api-openapi.yml",
+    "frp-configuration-api-openapi.yml",
+    "frp-health-api-openapi.yml",
+    "frp-lifecycle-api-openapi.yml",
+    "frp-metrics-api-openapi.yml",
+    "frp-proxies-api-openapi.yml",
+    "frp-server-api-openapi.yml",
+    "frp-status-api-openapi.yml",
+    "frp-store-api-openapi.yml"
+  ],
+  "outputs": [
+    "frp-clients-api-openapi.yml",
+    "frp-configuration-api-openapi.yml",
+    "frp-health-api-openapi.yml",
+    "frp-lifecycle-api-openapi.yml",
+    "frp-metrics-api-openapi.yml",
+    "frp-proxies-api-openapi.yml",
+    "frp-server-api-openapi.yml",
+    "frp-status-api-openapi.yml",
+    "frp-store-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
