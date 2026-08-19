@@ -28,7 +28,7 @@ tags:
   - Tunneling
   - Open Source
 url: https://raw.githubusercontent.com/api-evangelist/frp/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: frp:frp-clients-api
   name: frp Clients API
