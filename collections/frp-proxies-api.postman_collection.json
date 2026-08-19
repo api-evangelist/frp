@@ -1,0 +1,950 @@
+{
+  "item": [
+    {
+      "id": "802a5d22-9236-4b20-b70e-078fda7a46c7",
+      "name": "Proxies",
+      "description": {
+        "content": "Active proxy inventory and traffic stats",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4adc48a9-c980-4fe6-9f47-00b77e3a289d",
+          "name": "List proxies by type",
+          "request": {
+            "name": "List proxies by type",
+            "description": {
+              "content": "Returns all known proxies for a given proxy type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "proxy",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) Proxy type"
+                },
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "73c3cb93-75f9-4489-92ae-96576f9d1386",
+              "name": "Proxies of the requested type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "proxy",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Proxy type"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"proxies\": [\n    {\n      \"name\": \"string\",\n      \"user\": \"string\",\n      \"clientId\": \"string\",\n      \"conf\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"status\": \"offline\",\n      \"todayTrafficIn\": 1156,\n      \"todayTrafficOut\": 511,\n      \"curConns\": 6104,\n      \"lastStartTime\": \"string\",\n      \"lastCloseTime\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"user\": \"string\",\n      \"clientId\": \"string\",\n      \"conf\": {\n        \"key_0\": \"string\",\n        \"key_1\": 1892,\n        \"key_2\": \"string\"\n      },\n      \"status\": \"offline\",\n      \"todayTrafficIn\": 3889,\n      \"todayTrafficOut\": 1487,\n      \"curConns\": 8518,\n      \"lastStartTime\": \"string\",\n      \"lastCloseTime\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "392a4f78-fc06-4296-b23d-37043ec253dd",
+          "name": "Get proxy by type and name",
+          "request": {
+            "name": "Get proxy by type and name",
+            "description": {
+              "content": "Returns detailed statistics for a single proxy identified by type and name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "proxy",
+                ":type",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) Proxy type"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Proxy name"
+                },
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e99a722-5370-47db-a122-e1e0b535d329",
+              "name": "Proxy statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "proxy",
+                    ":type",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Proxy type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Proxy name"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"user\": \"string\",\n  \"clientId\": \"string\",\n  \"conf\": {\n    \"key_0\": \"string\"\n  },\n  \"status\": \"offline\",\n  \"todayTrafficIn\": 8586,\n  \"todayTrafficOut\": 7323,\n  \"curConns\": 6669,\n  \"lastStartTime\": \"string\",\n  \"lastCloseTime\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6526ac3f-4356-44b4-9d1b-d5bc392dbe17",
+              "name": "No proxy info found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "proxy",
+                    ":type",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Proxy type"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Proxy name"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8324,\n  \"msg\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4c690e0-7fd4-4e6b-9f24-e1518d79e2ec",
+          "name": "Get proxy by name",
+          "request": {
+            "name": "Get proxy by name",
+            "description": {
+              "content": "Returns detailed statistics for a single proxy identified by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "proxies",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Proxy name"
+                },
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1aaf6d8c-074f-488a-b903-d8e18425c530",
+              "name": "Proxy statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "proxies",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Proxy name"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"user\": \"string\",\n  \"clientId\": \"string\",\n  \"conf\": {\n    \"key_0\": \"string\"\n  },\n  \"status\": \"offline\",\n  \"todayTrafficIn\": 8586,\n  \"todayTrafficOut\": 7323,\n  \"curConns\": 6669,\n  \"lastStartTime\": \"string\",\n  \"lastCloseTime\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10671f2b-b0a3-46e6-acd5-00bede0ebfdb",
+              "name": "No proxy info found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "proxies",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Proxy name"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8324,\n  \"msg\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2da01250-8e72-4292-b777-18c2fed9f69e",
+          "name": "Delete offline proxies",
+          "request": {
+            "name": "Delete offline proxies",
+            "description": {
+              "content": "Clears proxies that are no longer connected. The status query parameter must be set to offline; any other value is rejected.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "proxies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "(Required) Proxy status to clear (only offline is supported)"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c1e379f-37dd-4473-88fb-38e163d38ccf",
+              "name": "Offline proxies cleared",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8324,\n  \"msg\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2135d91d-fb43-4db1-8028-8118a9a0e231",
+              "name": "Unsupported status value",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8324,\n  \"msg\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f487b96-38f9-4f51-b188-3948fa0be8bd",
+          "name": "Get proxy traffic",
+          "request": {
+            "name": "Get proxy traffic",
+            "description": {
+              "content": "Returns daily inbound and outbound traffic counters for a proxy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "traffic",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Proxy name"
+                },
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c648ba7-7a9f-4be6-b3f6-498dde271999",
+              "name": "Traffic counters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "traffic",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Proxy name"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"trafficIn\": [\n    5663,\n    7994\n  ],\n  \"trafficOut\": [\n    8131,\n    3619\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e672e4a3-41c3-45a0-a037-0908587e591f",
+              "name": "No proxy info found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "traffic",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Proxy name"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8324,\n  \"msg\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Address where frpc webServer is listening (webServer.addr)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "host"
+    },
+    {
+      "description": {
+        "content": "Port where frpc webServer is listening (webServer.port)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "7400",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "http://{{host}}:{{port}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b7160eaa-870f-4243-9009-c7d531b0a9c5",
+    "name": "frp Client Admin Clients Proxies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.\n\nContact Support:\n Name: frp",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "frp Client Admin Clients Store API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Store",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List stored proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/proxies"
+          },
+          "docs": "Lists proxy definitions persisted in the configuration store. Available only when a store source is configured."
+        },
+        {
+          "info": {
+            "name": "Create stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{host}:{port}/api/store/proxies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Persists a new proxy definition in the configuration store."
+        },
+        {
+          "info": {
+            "name": "Get stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/proxies/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored proxy name"
+              }
+            ]
+          },
+          "docs": "Get stored proxy"
+        },
+        {
+          "info": {
+            "name": "Update stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{host}:{port}/api/store/proxies/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored proxy name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update stored proxy"
+        },
+        {
+          "info": {
+            "name": "Delete stored proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{host}:{port}/api/store/proxies/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored proxy name"
+              }
+            ]
+          },
+          "docs": "Delete stored proxy"
+        },
+        {
+          "info": {
+            "name": "List stored visitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/visitors"
+          },
+          "docs": "Lists visitor definitions persisted in the configuration store. Available only when a store source is configured."
+        },
+        {
+          "info": {
+            "name": "Create stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{host}:{port}/api/store/visitors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create stored visitor"
+        },
+        {
+          "info": {
+            "name": "Get stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/store/visitors/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored visitor name"
+              }
+            ]
+          },
+          "docs": "Get stored visitor"
+        },
+        {
+          "info": {
+            "name": "Update stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{host}:{port}/api/store/visitors/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored visitor name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update stored visitor"
+        },
+        {
+          "info": {
+            "name": "Delete stored visitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{host}:{port}/api/store/visitors/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Stored visitor name"
+              }
+            ]
+          },
+          "docs": "Delete stored visitor"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

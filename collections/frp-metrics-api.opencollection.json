@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "frp Client Admin Clients Metrics API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Prometheus metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/metrics"
+          },
+          "docs": "Exposes Prometheus-format metrics for the frps process. Only available when enablePrometheus is set to true in the server configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

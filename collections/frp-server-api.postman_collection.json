@@ -1,0 +1,169 @@
+{
+  "item": [
+    {
+      "id": "5961c8b5-686e-4360-827b-b9aca5b1faa1",
+      "name": "Server",
+      "description": {
+        "content": "Server runtime information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f42eb405-9f4f-498d-9507-58c767359548",
+          "name": "Get server info",
+          "request": {
+            "name": "Get server info",
+            "description": {
+              "content": "Returns version, listening ports, configured limits, and aggregate traffic and connection statistics for the frps process.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "serverinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1de54aac-6a44-4ed4-ba04-78d0d4ec47d1",
+              "name": "Server information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "serverinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": \"string\",\n  \"bindPort\": 9468,\n  \"vhostHTTPPort\": 3230,\n  \"vhostHTTPSPort\": 5119,\n  \"tcpmuxHTTPConnectPort\": 3288,\n  \"kcpBindPort\": 9976,\n  \"quicBindPort\": 2965,\n  \"subdomainHost\": \"string\",\n  \"maxPoolCount\": 6486,\n  \"maxPortsPerClient\": 1967,\n  \"heartbeatTimeout\": 3923,\n  \"allowPortsStr\": \"string\",\n  \"tlsForce\": false,\n  \"totalTrafficIn\": 3497,\n  \"totalTrafficOut\": 2287,\n  \"curConns\": 8397,\n  \"clientCounts\": 5704,\n  \"proxyTypeCount\": {\n    \"key_0\": 1498\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Address where frpc webServer is listening (webServer.addr)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "host"
+    },
+    {
+      "description": {
+        "content": "Port where frpc webServer is listening (webServer.port)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "7400",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "http://{{host}}:{{port}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5a9b4c78-e11c-444c-86f9-bb63ed139282",
+    "name": "frp Client Admin Clients Server API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.\n\nContact Support:\n Name: frp",
+      "type": "text/plain"
+    }
+  }
+}

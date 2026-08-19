@@ -1,0 +1,398 @@
+{
+  "item": [
+    {
+      "id": "7c9da8b8-3bca-4490-80e6-b7a6285738cd",
+      "name": "Clients",
+      "description": {
+        "content": "Connected client inventory",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "91d789e6-711b-4588-8f20-7a846456820e",
+          "name": "List clients",
+          "request": {
+            "name": "List clients",
+            "description": {
+              "content": "Returns the registry of clients (frpc instances) that have authenticated against the server, with optional filters for user, client identifier, run identifier, and online status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "clients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "Filter by client user name"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientId",
+                  "value": "<string>",
+                  "description": "Filter by client identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Filter by frpc run identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by online status"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2df3970-793d-4bfe-b7ce-f9b8c677ebb3",
+              "name": "Clients matching the filter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key\": \"string\",\n    \"user\": \"string\",\n    \"clientId\": \"string\",\n    \"runId\": \"string\",\n    \"version\": \"string\",\n    \"hostname\": \"string\",\n    \"clientIp\": \"string\",\n    \"firstConnectedAt\": 9306,\n    \"lastConnectedAt\": 406,\n    \"disconnectedAt\": 6875,\n    \"online\": false\n  },\n  {\n    \"key\": \"string\",\n    \"user\": \"string\",\n    \"clientId\": \"string\",\n    \"runId\": \"string\",\n    \"version\": \"string\",\n    \"hostname\": \"string\",\n    \"clientIp\": \"string\",\n    \"firstConnectedAt\": 8165,\n    \"lastConnectedAt\": 8023,\n    \"disconnectedAt\": 8343,\n    \"online\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fdc37027-2ab6-48ff-8105-d0e5cd9a5d8e",
+          "name": "Get client detail",
+          "request": {
+            "name": "Get client detail",
+            "description": {
+              "content": "Returns detail for a single client identified by its registry key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "clients",
+                ":key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) Registry key for the client"
+                },
+                {
+                  "description": "Address where frpc webServer is listening (webServer.addr)",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                },
+                {
+                  "description": "Port where frpc webServer is listening (webServer.port)",
+                  "type": "any",
+                  "value": "{{port}}",
+                  "key": "port"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a38243f-1ef3-4453-9c87-cb3024c9f36b",
+              "name": "Client detail",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clients",
+                    ":key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) Registry key for the client"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"user\": \"string\",\n  \"clientId\": \"string\",\n  \"runId\": \"string\",\n  \"version\": \"string\",\n  \"hostname\": \"string\",\n  \"clientIp\": \"string\",\n  \"firstConnectedAt\": 3707,\n  \"lastConnectedAt\": 1882,\n  \"disconnectedAt\": 8043,\n  \"online\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2b10a0f-325d-4664-9bfd-c960f9c1696b",
+              "name": "Client not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clients",
+                    ":key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) Registry key for the client"
+                    },
+                    {
+                      "description": "Address where frpc webServer is listening (webServer.addr)",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    },
+                    {
+                      "description": "Port where frpc webServer is listening (webServer.port)",
+                      "type": "any",
+                      "value": "{{port}}",
+                      "key": "port"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 373,\n  \"msg\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Address where frpc webServer is listening (webServer.addr)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "127.0.0.1",
+      "key": "host"
+    },
+    {
+      "description": {
+        "content": "Port where frpc webServer is listening (webServer.port)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "7400",
+      "key": "port"
+    },
+    {
+      "type": "string",
+      "value": "http://{{host}}:{{port}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2676eafd-ecb6-48cb-8268-17c2fe022f42",
+    "name": "frp Client Admin Clients API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.\n\nContact Support:\n Name: frp",
+      "type": "text/plain"
+    }
+  }
+}

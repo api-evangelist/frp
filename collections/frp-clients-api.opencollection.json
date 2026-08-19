@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "frp Client Admin Clients API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/clients",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Filter by client user name"
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by client identifier"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by frpc run identifier"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by online status"
+              }
+            ]
+          },
+          "docs": "Returns the registry of clients (frpc instances) that have authenticated against the server, with optional filters for user, client identifier, run identifier, and online status."
+        },
+        {
+          "info": {
+            "name": "Get client detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/clients/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Registry key for the client"
+              }
+            ]
+          },
+          "docs": "Returns detail for a single client identified by its registry key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

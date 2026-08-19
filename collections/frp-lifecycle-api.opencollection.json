@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "frp Client Admin Clients Lifecycle API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lifecycle",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reload configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/reload"
+          },
+          "docs": "Reloads proxy and visitor configuration from the configuration source without restarting frpc."
+        },
+        {
+          "info": {
+            "name": "Stop client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{host}:{port}/api/stop"
+          },
+          "docs": "Initiates a graceful shutdown of the running frpc process."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

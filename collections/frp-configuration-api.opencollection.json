@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "frp Client Admin Clients Configuration API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/config"
+          },
+          "docs": "Returns the raw text of the active frpc configuration."
+        },
+        {
+          "info": {
+            "name": "Replace configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{host}:{port}/api/config"
+          },
+          "docs": "Replaces the active frpc configuration with the request body."
+        },
+        {
+          "info": {
+            "name": "Get proxy configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/proxy/:name/config",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Proxy name"
+              }
+            ]
+          },
+          "docs": "Returns the runtime configuration for a single proxy identified by name."
+        },
+        {
+          "info": {
+            "name": "Get visitor configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{host}:{port}/api/visitor/:name/config",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Visitor name"
+              }
+            ]
+          },
+          "docs": "Returns the runtime configuration for a single visitor identified by name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
