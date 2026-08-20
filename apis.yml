@@ -26,6 +26,11 @@ tags:
   - NAT Traversal
   - Reverse Proxy
   - Tunneling
+  - Open-Source
+tags_raw:
+  - NAT Traversal
+  - Reverse Proxy
+  - Tunneling
   - Open Source
 url: https://raw.githubusercontent.com/api-evangelist/frp/refs/heads/main/apis.yml
 specificationVersion: '0.23'
