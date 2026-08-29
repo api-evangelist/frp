@@ -5,6 +5,18 @@ description: >-
   internet. Both the server (frps) and the client (frpc) include built-in HTTP admin APIs that operators can use to
   inspect runtime status, manage proxies and visitors, hot-reload configuration, and scrape Prometheus metrics.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: false
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
