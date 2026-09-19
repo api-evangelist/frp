@@ -139,6 +139,8 @@ apis:
   humanURL: https://gofrp.org/en/docs/features/common/server-dashboard/
   baseURL: http://localhost:7500
   tags:
+  - Servers
+  tags_raw:
   - Server
   properties:
   - type: OpenAPI
