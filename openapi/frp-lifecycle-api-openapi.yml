@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: frp Client Admin Clients Lifecycle API
+  title: frp Client Admin Lifecycle API
   description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
   version: 0.0.1
   contact:

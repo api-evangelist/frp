@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: frp Client Admin Clients Proxies API
-  description: The frp client (frpc) exposes a built-in HTTP admin API on its local web server. The API lets operators inspect or hot-reload the client configuration, stop the client, query proxy and visitor status, and (when a configuration store is enabled) manage stored proxy and visitor definitions. All routes (except /healthz) require HTTP Basic authentication using the user and password configured in webServer.user and webServer.password.
+  title: frp Server Admin Proxies API
+  description: The frp server (frps) exposes a built-in HTTP admin API on its dashboard web server. The API returns runtime information about the frps process, connected clients, and active proxies, and lets operators inspect proxy traffic statistics or clear offline proxies. All routes (except /healthz) require HTTP Basic authentication using the dashboard user and password configured in webServer.user and webServer.password.
   version: 0.0.1
   contact:
     name: frp
@@ -11,14 +11,14 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0
 servers:
 - url: http://{host}:{port}
-  description: frp client admin server (frpc webServer)
+  description: frp server dashboard (frps webServer)
   variables:
     host:
-      default: 127.0.0.1
-      description: Address where frpc webServer is listening (webServer.addr)
+      default: localhost
+      description: Address where frps webServer is listening (webServer.addr)
     port:
-      default: '7400'
-      description: Port where frpc webServer is listening (webServer.port)
+      default: '7500'
+      description: Port where frps webServer is listening (webServer.port)
 security:
 - BasicAuth: []
 tags:
@@ -177,16 +177,16 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ProxyStats:
-      allOf:
-      - $ref: '#/components/schemas/ProxyStatsInfo'
-    Error:
+    GeneralResponse:
       type: object
       properties:
         code:
           type: integer
         msg:
           type: string
+    ProxyStats:
+      allOf:
+      - $ref: '#/components/schemas/ProxyStatsInfo'
     ProxyStatsInfo:
       type: object
       properties:
@@ -216,7 +216,7 @@ components:
           type: string
         lastCloseTime:
           type: string
-    GeneralResponse:
+    Error:
       type: object
       properties:
         code:
