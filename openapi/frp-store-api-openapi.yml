@@ -267,6 +267,13 @@ components:
           type: integer
         msg:
           type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
     StoredProxy:
       type: object
       properties:
@@ -280,13 +287,6 @@ components:
       required:
       - name
       - type
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
     StoredVisitor:
       type: object
       properties:

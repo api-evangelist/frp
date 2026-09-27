@@ -6,16 +6,21 @@ description: >-
   inspect runtime status, manage proxies and visitors, hot-reload configuration, and scrape Prometheus metrics.
 type: Index
 deliveryModel:
-  model: unknown
-  open_source: unknown
+  model: self-hosted
+  license: Apache-2.0
+  license_evidence:
+    repo: fatedier/frp
+    spdx: Apache-2.0
+    stars: 109623
+  open_source: true
   commercial: false
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Self-hosted open source · you run it yourself
+  confidence: medium
   source:
   - openapi
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -40,12 +45,13 @@ tags:
   - NAT Traversal
   - Reverse Proxy
   - Tunneling
-  - Open-Source
+  - Open Source
 tags_raw:
   - NAT Traversal
   - Reverse Proxy
   - Tunneling
   - Open Source
+  - Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/frp/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
