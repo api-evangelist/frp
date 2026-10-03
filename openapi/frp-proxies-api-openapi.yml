@@ -184,6 +184,13 @@ components:
           type: integer
         msg:
           type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
     ProxyStatsInfo:
       type: object
       properties:
@@ -213,9 +220,6 @@ components:
           type: string
         lastCloseTime:
           type: string
-    ProxyStats:
-      allOf:
-      - $ref: '#/components/schemas/ProxyStatsInfo'
     ProxyTraffic:
       type: object
       properties:
@@ -231,13 +235,9 @@ components:
           items:
             type: integer
             format: int64
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
+    ProxyStats:
+      allOf:
+      - $ref: '#/components/schemas/ProxyStatsInfo'
   securitySchemes:
     BasicAuth:
       type: http

@@ -274,7 +274,7 @@ components:
           type: integer
         msg:
           type: string
-    StoredProxy:
+    StoredVisitor:
       type: object
       properties:
         name:
@@ -287,7 +287,7 @@ components:
       required:
       - name
       - type
-    StoredVisitor:
+    StoredProxy:
       type: object
       properties:
         name:

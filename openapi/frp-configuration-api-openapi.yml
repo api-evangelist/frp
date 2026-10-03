@@ -117,14 +117,14 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
+    GeneralResponse:
       type: object
       properties:
         code:
           type: integer
         msg:
           type: string
-    GeneralResponse:
+    Error:
       type: object
       properties:
         code:
