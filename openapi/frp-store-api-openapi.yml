@@ -260,14 +260,20 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    GeneralResponse:
+    StoredProxy:
       type: object
       properties:
-        code:
-          type: integer
-        msg:
+        name:
           type: string
-    Error:
+        type:
+          type: string
+        config:
+          type: object
+          additionalProperties: true
+      required:
+      - name
+      - type
+    GeneralResponse:
       type: object
       properties:
         code:
@@ -287,19 +293,13 @@ components:
       required:
       - name
       - type
-    StoredProxy:
+    Error:
       type: object
       properties:
-        name:
+        code:
+          type: integer
+        msg:
           type: string
-        type:
-          type: string
-        config:
-          type: object
-          additionalProperties: true
-      required:
-      - name
-      - type
   securitySchemes:
     BasicAuth:
       type: http

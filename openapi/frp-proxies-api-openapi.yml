@@ -184,13 +184,6 @@ components:
           type: integer
         msg:
           type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
     ProxyStatsInfo:
       type: object
       properties:
@@ -219,6 +212,13 @@ components:
         lastStartTime:
           type: string
         lastCloseTime:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
           type: string
     ProxyTraffic:
       type: object
