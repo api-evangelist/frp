@@ -95,6 +95,13 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
     ClientInfo:
       type: object
       properties:
@@ -123,13 +130,6 @@ components:
           format: int64
         online:
           type: boolean
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
   securitySchemes:
     BasicAuth:
       type: http

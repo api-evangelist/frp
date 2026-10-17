@@ -260,19 +260,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    StoredProxy:
-      type: object
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        config:
-          type: object
-          additionalProperties: true
-      required:
-      - name
-      - type
     GeneralResponse:
       type: object
       properties:
@@ -280,7 +267,7 @@ components:
           type: integer
         msg:
           type: string
-    StoredVisitor:
+    StoredProxy:
       type: object
       properties:
         name:
@@ -300,6 +287,19 @@ components:
           type: integer
         msg:
           type: string
+    StoredVisitor:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        config:
+          type: object
+          additionalProperties: true
+      required:
+      - name
+      - type
   securitySchemes:
     BasicAuth:
       type: http

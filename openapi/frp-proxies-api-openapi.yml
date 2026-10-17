@@ -177,13 +177,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    GeneralResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
     ProxyStatsInfo:
       type: object
       properties:
@@ -213,7 +206,17 @@ components:
           type: string
         lastCloseTime:
           type: string
+    ProxyStats:
+      allOf:
+      - $ref: '#/components/schemas/ProxyStatsInfo'
     Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+    GeneralResponse:
       type: object
       properties:
         code:
@@ -235,9 +238,6 @@ components:
           items:
             type: integer
             format: int64
-    ProxyStats:
-      allOf:
-      - $ref: '#/components/schemas/ProxyStatsInfo'
   securitySchemes:
     BasicAuth:
       type: http
