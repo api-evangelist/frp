@@ -1,4 +1,4 @@
-# frp (frp)
+# frp
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,80 +66,132 @@
 
 frp is an open-source fast reverse proxy that exposes services running behind a NAT or firewall to the public internet. Both the server (frps) and the client (frpc) include built-in HTTP admin APIs that operators can use to inspect runtime status, manage proxies and visitors, hot-reload configuration, and scrape Prometheus metrics.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/frp/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/frp/refs/heads/main/apis.yml)
+**Areas:** NAT Traversal · Reverse Proxy · Tunneling · Open Source
 
-## Scope
+## frp on APIs.io
 
-- **Type:** Index
-- **Access:** Open Source
+Everything profiled for frp is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/frp/](https://apis.io/providers/frp/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (9)
 
-- NAT Traversal
-- Reverse Proxy
-- Tunneling
-- Open Source
+- [frp Clients API](https://apis.io/apis/frp/frp-clients-api/) — Connected client inventory
+- [frp Configuration API](https://apis.io/apis/frp/frp-configuration-api/) — Read and replace the in-memory frpc configuration
+- [frp Health API](https://apis.io/apis/frp/frp-health-api/) — Liveness probe
+- [frp Lifecycle API](https://apis.io/apis/frp/frp-lifecycle-api/) — Reload and stop the running frpc process
+- [frp Metrics API](https://apis.io/apis/frp/frp-metrics-api/) — Prometheus metrics endpoint
+- [frp Proxies API](https://apis.io/apis/frp/frp-proxies-api/) — Active proxy inventory and traffic stats
+- [frp Server API](https://apis.io/apis/frp/frp-server-api/) — Server runtime information
+- [frp Status API](https://apis.io/apis/frp/frp-status-api/) — Runtime status of proxies and visitors
+- [frp Store API](https://apis.io/apis/frp/frp-store-api/) — Persistent configuration store for proxies and visitors
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-27
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### frp Server Admin API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The frp server admin API is the HTTP control plane exposed by frps on its dashboard web server. It returns version and traffic information for the server, lists connected clients, lists and inspects active proxies of any type, returns daily traffic counters per proxy, and lets operators clear proxies that are offline. The API is secured with HTTP Basic auth using the dashboard user and password configured in the frps webServer block.
+- [Frp Agentic Access](https://apis.io/agentic-access/frp/frp-agentic-access/)
 
-- **Human URL:** [https://gofrp.org/en/docs/features/common/server-dashboard/](https://gofrp.org/en/docs/features/common/server-dashboard/)
-- **Base URL:** `http://localhost:7500`
+#### Collections (11)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- NAT Traversal
-- Reverse Proxy
-- Server Admin
-- Dashboard
+- [frp Client Admin API](https://apis.io/collections/frp/open-frp-client-admin-api/)
+- [frp Client Admin Clients API](https://apis.io/collections/frp/open-frp-clients-api/)
+- [frp Client Admin Clients Configuration API](https://apis.io/collections/frp/open-frp-configuration-api/)
+- [frp Client Admin Clients Health API](https://apis.io/collections/frp/open-frp-health-api/)
+- [frp Client Admin Clients Lifecycle API](https://apis.io/collections/frp/open-frp-lifecycle-api/)
+- [frp Client Admin Clients Metrics API](https://apis.io/collections/frp/open-frp-metrics-api/)
+- [frp Client Admin Clients Proxies API](https://apis.io/collections/frp/open-frp-proxies-api/)
+- [frp Server Admin API](https://apis.io/collections/frp/open-frp-server-admin-api/)
+- [frp Client Admin Clients Server API](https://apis.io/collections/frp/open-frp-server-api/)
+- [frp Client Admin Clients Status API](https://apis.io/collections/frp/open-frp-status-api/)
+- [frp Client Admin Clients Store API](https://apis.io/collections/frp/open-frp-store-api/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://gofrp.org/en/docs/features/common/server-dashboard/)
-- [OpenAPI](openapi/frp-server-admin-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/frp-server-admin-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/frp-server-admin-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### frp Client Admin API
+- [Frp Authentication](https://apis.io/security/frp/frp-authentication/)
+- [Frp Domain Security](https://apis.io/security/frp/frp-domain-security/)
 
-The frp client admin API is the HTTP control plane exposed by frpc on its local web server. It supports hot-reloading the proxy and visitor configuration, stopping the running client, returning the active config, replacing the active config, querying per-proxy and per-visitor status, and (when a configuration store is enabled) listing, creating, updating, and deleting persisted proxy and visitor definitions. The API is secured with HTTP Basic auth using the user and password configured in the frpc webServer block.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://gofrp.org/en/docs/reference/client-configures/](https://gofrp.org/en/docs/reference/client-configures/)
-- **Base URL:** `http://127.0.0.1:7400`
+Published plans, tiers and prices.
 
-#### Tags
+- [Frp Plans Pricing](https://apis.io/plans/frp/frp-plans-pricing/)
 
-- NAT Traversal
-- Reverse Proxy
-- Client Admin
-- Configuration
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://gofrp.org/en/docs/reference/client-configures/)
-- [OpenAPI](openapi/frp-client-admin-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/frp-client-admin-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/frp-client-admin-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Frp Rate Limits](https://apis.io/rate-limits/frp/frp-rate-limits/)
 
-## Common Properties
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Frp Finops](https://apis.io/finops/frp/frp-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://gofrp.org/)
 - [Documentation](https://gofrp.org/en/docs/)
-- [Getting Started](https://gofrp.org/en/docs/setup/)
-- [Source Code](https://github.com/fatedier/frp)
-- [Issues](https://github.com/fatedier/frp/issues)
-- [Releases](https://github.com/fatedier/frp/releases)
-- [License](https://github.com/fatedier/frp/blob/master/LICENSE)
+- [Getting started](https://gofrp.org/en/docs/setup/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 48.2 |
+| Contract quality | 50.2 |
+| Contract governance | 0.0 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 33.3 |
+| Access clarity | 7.9 |
+
+**Agent readiness 23.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/frp/](https://apis.io/providers/frp/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for frp: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/frp/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
